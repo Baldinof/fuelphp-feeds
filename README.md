@@ -8,8 +8,8 @@ Installation
 1. Go to fuel/packages/
 2. Clone (`git clone git://github.com/Baldinof/fuelphp-feeds`) / [download](https://github.com/Baldinof/fuelphp-feeds/zipball/master)
 3. Optionally create a fuel/app/config/feeds.php fiel (to set some default values)
-5. Optionally add 'fuel-feed' to the 'always_load/packages' array in app/config/config.php 
-   (or call `Package::load('fuel-feeds')` whenever you want to use it).
+5. Optionally add 'fuelphp-feeds' to the 'always_load/packages' array in app/config/config.php 
+   (or call `Package::load('fuelphp-feeds')` whenever you want to use it).
 6. Enjoy :)
 
 Introduction
@@ -177,7 +177,7 @@ Feeds reader will call this controller very frequently.
 I recommend to store the XML in a file, and rebuild it 
 only when a post are saved, modified or deleted.
 
-Have a look to the `example` folder.
+Have a look to the [example](https://github.com/Baldinof/fuelphp-feeds/tree/master/examples) folder.
 
 See also
 --------
