@@ -366,6 +366,9 @@ class Feeds_Builder
 
 	/**
 	 * Build the XML string, according to RSS specs
+	 *
+ 	 * @todo Support of guid on item
+ 	 *
 	 * @param bool $throw false will return null if data is invalid, true throw exception
 	 * @return string|null the xml string, null if $throw = false and an error occur
 	 */
@@ -378,7 +381,10 @@ class Feeds_Builder
 			return null;
 		}
 
-		$rss = new \SimpleXMLElement('<?xml version="1.0"?><rss version="2.0"><channel></channel></rss>');
+		$atomNs = 'http://www.w3.org/2005/Atom';
+
+		$rss = new \SimpleXMLElement('<?xml version="1.0"?><rss version="2.0" xmlns:atom="'.$atomNs.'"><channel></channel></rss>');
+		$rss->registerXPathNamespace('atom', $atomNs);
 		$channel = $rss->channel;
 
 		$build_date = new \DateTime();
@@ -389,6 +395,13 @@ class Feeds_Builder
 		$channel->title 		= $this->data['title'];
 		$channel->description 	= $this->data['description'] ? : $this->data['title'];
 		$channel->lastBuildDate = $build_date->format(\DateTime::RSS);
+
+		if(\Arr::get($this->data, 'self_rss')) {
+			$source = $channel->addChild('link', '', $atomNs);
+			$source['href'] = $this->data['self_rss'];
+			$source['rel']  = 'self';
+			$source['type'] = 'application/rss+xml';
+		}
 
 		// author
 		$this->data['author_email'] and $channel->managingEditor = $this->data['author_email'];
