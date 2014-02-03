@@ -311,10 +311,14 @@ class Feeds_Builder
 
             $date = date_create()->setTimestamp($item['updated_at']);
 
+            $url = \Uri::create( $item['url'] );
+
             // required
-            $entry->id          = \Uri::create( $item['url'] );
-            $entry->title       = $item['title'];
-            $entry->updated     = $date->format(\DateTime::ATOM);
+            $entry->id      = $url;
+            $entry->title   = $item['title'];
+            $entry->updated = $date->format(\DateTime::ATOM);
+            $link           = $entry->addChild('link');
+            $link['href']   = $url;
 
             // optionnals
 
